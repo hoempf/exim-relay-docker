@@ -21,6 +21,24 @@ $ docker run -it --rm \
 ```
 This should build and start the container ready for SMTP relaying to the smarthost list.
 
+### Specify permitted subnets
+
+If you don't specify `RELAY_FROM_HOSTS` then only localhost (127.0.0.1, ::1) can relay mail.
+Here's an example for allowing a host in the subnet 192.0.2.0/24 to relay to the smarthost:
+
+```bash
+$ docker run -it --rm \
+    --init \
+    --name docker-exim \
+    -p "25:2525" \
+    -v eximspool:/var/spool/exim \
+    -e RELAY_FROM_HOSTS="<; 127.0.0.1 ; ::1 ; 192.0.2.0/24" \
+    -e SMARTHOSTS="smtp.example.com" \
+    docker-exim
+```
+
+**Note:** The syntax is explained [here](https://www.exim.org/exim-html-current/doc/html/spec_html/ch-domain_host_address_and_local_part_lists.html#SECTnamedlists) or below.
+
 ### Direct delivery using MX DNS lookups
 
 If you don't want to use smart hosts, just omit the env var `SMARTHOSTS` like this:
