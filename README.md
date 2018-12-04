@@ -15,10 +15,24 @@ $ docker run -it --rm \
     --init \
     --name docker-exim \
     -p "25:2525" \
+    -v eximspool:/var/spool/exim \
     -e SMARTHOSTS="smtp.example.com" \
     docker-exim
 ```
 This should build and start the container ready for SMTP relaying to the smarthost list.
+
+### Direct delivery using MX DNS lookups
+
+If you don't want to use smart hosts, just omit the env var `SMARTHOSTS` like this:
+
+```bash
+$ docker run -it --rm \
+    --init \
+    --name docker-exim \
+    -p "25:2525" \
+    -v eximspool:/var/spool/exim \
+    docker-exim
+```
 
 ### About multiple smarthosts
 
