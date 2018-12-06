@@ -62,7 +62,7 @@ $ docker run -it --rm \
     --name docker-exim \
     -p "25:2525" \
     -v eximspool:/var/spool/exim \
-    -e HELO_DATA="mail.example.com"
+    -e HELO_DATA="mail.example.com" \
     docker-exim
 ```
 
