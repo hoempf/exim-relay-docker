@@ -52,6 +52,22 @@ $ docker run -it --rm \
     docker-exim
 ```
 
+### Modify EHLO/HELO hostname sent
+
+Some servers block messages from servers sending EHLO data which doesn't resolve in DNS. You can override this setting:
+
+```bash
+$ docker run -it --rm \
+    --init \
+    --name docker-exim \
+    -p "25:2525" \
+    -v eximspool:/var/spool/exim \
+    -e HELO_DATA="mail.example.com"
+    docker-exim
+```
+
+**Note:** the `$primary_hostname` var in exim is still the result of `hostname()`.
+
 ### About multiple smarthosts
 
 The smarthost list should follow the exim specs about host lists.
