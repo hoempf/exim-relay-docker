@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+    - 1025:1025
+    - 8025:8025
+  exim:
+    image: hoempf/exim-relay-docker
+    ports:
+    - 2525:2525
+    environment:
+    - SMARTHOSTS=mailhog::1025
+    - HELO_DATA=swisssign.mirohost.ch
+    - "RELAY_FROM_HOSTS=<; 127.0.0.1 ; 10.0.0.0/8 ; 172.16.0.0/12 ; ::1"
